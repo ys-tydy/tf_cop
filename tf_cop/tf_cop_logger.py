@@ -71,15 +71,15 @@ class TfCopLogger:
         if self._program_error_log:
             self._output_log += pycolor.CYAN
             self._output_log += self._program_error_log
-        self._output_log += self.output_summary()
+        self._output_log += "\n" + self.output_summary()
         return self._output_log
 
     def output_summary(self):
-        res = "\n\n==========================================================\n"
-        res += "PASS NUM\t: " + str(self._pass_num) + "\n"
-        res += "WARN NUM\t: " + str(self._alert_num) + "\n"
-        res += "ALERT NUM\t: " + str(self._alert_num) + "\n"
-        res += "==========================================================\n"
+        res = "\n =======================\n"
+        res += "| PASS NUM\t: " + str(self._pass_num) + "\t|\n"
+        res += "| WARN NUM\t: " + str(self._alert_num) + "\t|\n"
+        res += "| ALERT NUM\t: " + str(self._alert_num) + "\t|\n"
+        res += " =======================\n"
         return res
 
     def add_program_error_log(self, error_message: str):
