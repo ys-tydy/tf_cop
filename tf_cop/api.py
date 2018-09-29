@@ -36,14 +36,14 @@ class TfCop:
             flg = False
         return flg
 
-    def result(self):
-        return self._logger.output()
+    def result(self, color: bool = False):
+        return self._logger.output(color)
 
-    def result_summary(self):
-        return self._logger.output_summary()
+    def result_summary(self, color: bool = False):
+        return self._logger.output_summary(color)
 
-    def program_error_log(self):
-        return self._logger.program_error_log
+    def program_error_log(self, color: bool = False):
+        return self._logger.program_error_log(color)
 
     def __review(self, review_book_path: str, tf_dict: dict, resource_name: str):
         if not os.path.exists(review_book_path):
