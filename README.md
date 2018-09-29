@@ -1,4 +1,4 @@
-# `TfCop` : Terraform automatic reviewer
+# Terraform automatic reviewer
 
 terraform scripts checker.<br>
 This package helps you to review your tf script.<br>
