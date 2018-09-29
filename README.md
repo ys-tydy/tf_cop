@@ -1,6 +1,6 @@
 # `TfCop` : Terraform automatic reviewer
 
-terraform setting checker.<br>
+terraform scripts checker.<br>
 This package helps you to review your tf script.<br>
 (ex: confirm add logging rule to all s3 bucket)
 
