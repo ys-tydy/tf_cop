@@ -26,7 +26,7 @@ if __name__ == '__main__':
 
 #### get output
 
-```
+```python
     ptint(test.result())
     ptint(test.result_summary())
     ptint(test.program_error_log())
