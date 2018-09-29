@@ -42,7 +42,7 @@ class TfCopLogger:
         self._output_log += "[PASS] " + review_dict['title'] + " : " + text + "\n"
         self._output_log += self._color_set["END"]
 
-    def warning(self, resource_dict, review_dict, text):
+    def warn(self, resource_dict, review_dict, text):
         self._warn_num += 1
         self._output_log += self._color_set["YELLOW"]
         self._output_log += "[WARN] " + review_dict['title'] + " : " + text + "\n"
@@ -76,7 +76,7 @@ class TfCopLogger:
     def output_summary(self, color: bool = False):
         res = "\n =======================\n"
         res += "| PASS NUM\t: " + str(self._pass_num) + "\t|\n"
-        res += "| WARN NUM\t: " + str(self._alert_num) + "\t|\n"
+        res += "| WARN NUM\t: " + str(self._warn_num) + "\t|\n"
         res += "| ALERT NUM\t: " + str(self._alert_num) + "\t|\n"
         res += " =======================\n"
         if color:

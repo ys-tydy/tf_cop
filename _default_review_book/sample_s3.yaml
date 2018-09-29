@@ -3,6 +3,7 @@ aws_s3_bucket:
   title: description_checker
   description: simple existance checker
   mode: existance
+  warn: True
   key: description
 -
   title: private_checker
@@ -32,6 +33,7 @@ aws_s3_bucket:
       title: env_checker
       description: nested value checker
       mode: value
+      warn: True
       key: Env
       value: (dev|stg|prd)
 -

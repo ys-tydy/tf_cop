@@ -10,11 +10,17 @@ class Checker:
             review_dict["value"] = ".*"
         if review_dict["key"] not in resource_dict:
             _text = review_dict["key"] + " not use"
-            self._logger.alert(resource_dict, review_dict, _text)
+            if "warn" in review_dict and review_dict["warn"]:
+                self._logger.warn(resource_dict, review_dict, _text)
+            else:
+                self._logger.alert(resource_dict, review_dict, _text)
             return False, _text
         if not re.match(review_dict["value"], str(resource_dict[review_dict["key"]])):
             _text = "value not matched " + review_dict["value"] + " " + str(resource_dict[review_dict["key"]])
-            self._logger.alert(resource_dict, review_dict, _text)
+            if "warn" in review_dict and review_dict["warn"]:
+                self._logger.warn(resource_dict, review_dict, _text)
+            else:
+                self._logger.alert(resource_dict, review_dict, _text)
             return False, _text
         self._logger.passed(resource_dict, review_dict, "passed")
         return True, ""
@@ -27,7 +33,7 @@ class Checker:
             if type(review_dict["nest"]) is list:
                 for tmp_review_dict in review_dict["nest"]:
                     flg, res = self.review_cycle(resource_dict[review_dict["key"]], tmp_review_dict)
-                    return flg, res
+                return flg, res
             else:
                 flg, res = self.review_cycle(resource_dict[review_dict["key"]], review_dict["nest"])
                 return flg, res
@@ -35,7 +41,7 @@ class Checker:
             if type(review_dict["nest"]) is list:
                 for tmp_review_dict in review_dict["nest"]:
                     flg, res = self.review_cycle(resource_dict, tmp_review_dict)
-                    return flg, res
+                return flg, res
             else:
                 flg, res = self.review_cycle(resource_dict, review_dict["nest"])
                 return flg, res
