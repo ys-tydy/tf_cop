@@ -116,8 +116,8 @@ set `TF_ROOT_PATH` & `REVIEW_BOOK_PATH`
 ```bash
 docker build -t tf_cop .
 docker run \
-      -v `pwd`/${TF_ROOT_PATH}:/tmp/terraform -v \
-      `pwd`/${REVIEW_BOOK_PATH}:/tmp/review_book \
+      -v `pwd`/${TF_ROOT_PATH}:/tmp/terraform \
+      -v `pwd`/${REVIEW_BOOK_PATH}:/tmp/review_book \
       tf_cop
 ```
 
