@@ -44,11 +44,11 @@ if __name__ == '__main__':
 |nest|for nested test|
 
 ### existance test
-check if target key is exist.
+check if target key is exist.<br>
 (ex. description)
 
 ### value test
-check if target value is correct.
+check if target value is correct.<br>
 (ex. name = "(prd|stg|dev)-s3-.*-terraform")
 
 ### nested test
