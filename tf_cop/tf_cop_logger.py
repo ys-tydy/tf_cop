@@ -24,13 +24,20 @@ class TfCopLogger:
             "INVISIBLE": '\033[08m',
             "REVERCE": '\033[07m'
         }
-        self._output_log = ""
-        self._program_error_log = ""
-        self._system_log = ""
-        self._resource_num = 0
-        self._pass_num = 0
-        self._warn_num = 0
-        self._alert_num = 0
+        self._output = {
+            "output_log": "",
+            "output_summary_log": "",
+            "program_error_log": "",
+            "system_log": "",
+            "count": {
+                "resource": 0,
+                "pass": 0,
+                "warn": 0,
+                "alert": 0
+            }
+        }
+        self._break_line_double = "==========================================================\n"
+        self._break_line_single = "----------------------------------------------------------\n"
 
     def skip(self, message: str):
         """
@@ -38,9 +45,7 @@ class TfCopLogger:
         :param message: (str)
         :return: None
         """
-        self._output_log += self._color_set["YELLOW"]
-        self._output_log += "[SKIP] " + message + "\n"
-        self._output_log += self._color_set["END"]
+        self._output["output_log"] += self.__set_color("[SKIP] " + message + "\n", "YELLOW")
 
     def passed(self, resource_dict: dict, review_dict: dict, text: str):
         """
@@ -50,10 +55,8 @@ class TfCopLogger:
         :param text: (str)
         :return: None
         """
-        self._pass_num += 1
-        self._output_log += self._color_set["GREEN"]
-        self._output_log += "[PASS] " + review_dict['title'] + " : " + text + "\n"
-        self._output_log += self._color_set["END"]
+        self._output["count"]["pass"] += 1
+        self._output["output_log"] += self.__set_color("[PASS] " + review_dict['title'] + " : " + text + "\n", "GREEN")
 
     def warn(self, resource_dict: dict, review_dict: dict, text: str):
         """
@@ -63,11 +66,11 @@ class TfCopLogger:
         :param text: (str)
         :return: None
         """
-        self._warn_num += 1
-        self._output_log += self._color_set["YELLOW"]
-        self._output_log += "[WARN] " + review_dict['title'] + " : " + text + "\n"
-        self._output_log += pp.pformat(resource_dict) + "\n"
-        self._output_log += self._color_set["END"]
+        self._output["count"]["warn"] += 1
+        self._output["output_log"] += self.__set_color(
+            "[WARN] " + review_dict['title'] + " : " + text + "\n" + pp.pformat(resource_dict) + "\n",
+            "YELLOW"
+        )
 
     def alert(self, resource_dict: dict, review_dict: dict, text: str):
         """
@@ -77,11 +80,11 @@ class TfCopLogger:
         :param text: (str)
         :return: None
         """
-        self._alert_num += 1
-        self._output_log += self._color_set["RED"]
-        self._output_log += "[ALERT] " + review_dict['title'] + " : " + text + "\n"
-        self._output_log += pp.pformat(resource_dict) + "\n"
-        self._output_log += self._color_set["END"]
+        self._output["count"]["alert"] += 1
+        self._output["output_log"] += self.__set_color(
+            "[ALERT] " + review_dict['title'] + " : " + text + "\n" + pp.pformat(resource_dict) + "\n",
+            "RED"
+        )
 
     def add_resource_info(self, resource_name: str, obj_name: str):
         """
@@ -90,44 +93,13 @@ class TfCopLogger:
         :param obj_name: (str)
         :return: None
         """
-        self._resource_num += 1
-        self._output_log += "\n==========================================================\n"
-        self._output_log += "RESOURCE " + self._color_set["UNDERLINE"]
-        self._output_log += resource_name.upper() + "." + obj_name.upper() + "\n"
-        self._output_log += self._color_set["END"]
-        self._output_log += "==========================================================\n"
-
-    def output(self, color: bool = False):
-        """
-        get full output
-        :param color: (bool)
-        :return: output: (str)
-        """
-        if self._program_error_log:
-            self._output_log += self._color_set["CYAN"]
-            self._output_log += self._program_error_log
-        self._output_log += "\n" + self.output_summary()
-        if color:
-            return self._output_log
-        else:
-            return self.__remove_color(self._output_log)
-
-    def output_summary(self, color: bool = False):
-        """
-        gesummary output
-        :param color: (bool)
-        :return: summary_output: (str)
-        """
-        res = "\n =======================\n"
-        res += "| RESOURCE NUM\t: " + str(self._pass_num) + "\t|\n"
-        res += "| PASS NUM\t: " + str(self._pass_num) + "\t|\n"
-        res += "| WARN NUM\t: " + str(self._warn_num) + "\t|\n"
-        res += "| ALERT NUM\t: " + str(self._alert_num) + "\t|\n"
-        res += " =======================\n"
-        if color:
-            return res
-        else:
-            return self.__remove_color(res)
+        self._output["count"]["resource"] += 1
+        self._output["output_log"] += "\n" + self._break_line_double
+        self._output["output_log"] += "RESOURCE " + self.__set_color(
+            resource_name.upper() + "." + obj_name.upper() + "\n",
+            "UNDERLINE"
+        )
+        self._output["output_log"] += self._break_line_double
 
     def add_program_error_log(self, error_message: str):
         """
@@ -135,11 +107,9 @@ class TfCopLogger:
         :param error_message: (str)
         :return: None
         """
-        self._program_error_log += "\n--------------------------------------------\n"
-        self._program_error_log += self._color_set["RED"]
-        self._program_error_log += error_message
-        self._program_error_log += self._color_set["END"]
-        self._program_error_log += "\n--------------------------------------------\n"
+        self._output["program_error_log"] += "\n" + self._break_line_single
+        self._output["program_error_log"] += self.__set_color(error_message, "RED")
+        self._output["program_error_log"] += "\n" + self._break_line_single
 
     def add_system_log(self, system_log: str):
         """
@@ -147,39 +117,56 @@ class TfCopLogger:
         :param system_log: (str)
         :return: None
         """
-        self._system_log += "\n--------------------------------------------\n"
-        self._system_log += system_log
-        self._system_log += "\n--------------------------------------------\n"
+        self._output["system_log"] += "\n" + self._break_line_single
+        self._output["system_log"] += system_log
+        self._output["system_log"] += "\n" + self._break_line_single
 
-    def system_log(self, color: bool = False):
+    def output(self, color_flg: bool = False):
         """
         system log
-        :param color: (bool)
+        :param color_flg: (bool)
         :return: system_log: (str)
         """
-        if color:
-            return self._system_log
+        self.__set_summary_log()
+        if color_flg:
+            return self._output
         else:
-            return self.__remove_color(self._system_log)
+            return self.__remove_color(self._output)
 
-    def program_error_log(self, color: bool = False):
+    def __set_color(self, text: str, color: str):
         """
-        program error log
-        :param color: (bool)
-        :return: program_error_log: (str)
-        """
-        if color:
-            return self._program_error_log
-        else:
-            return self.__remove_color(self._program_error_log)
-
-    def __remove_color(self, text):
-        """
-        remove color srt
+        set color
         :param text: (str)
+        :param color: (str)
         :return: text: (str)
         """
-        res = text
-        for color in self._color_set.keys():
-            res = res.replace(self._color_set[color], "")
+        res = self._color_set[color]
+        res += text
+        res += self._color_set["END"]
         return res
+
+    def __remove_color(self, dict: dict):
+        """
+        remove color srt
+        :param dict: (dict)
+        :return: dict: (dict)
+        """
+        for key in dict.keys():
+            if type(dict[key]) == "dict":
+                dict[key] = self.__remove_color(dict[key])
+            elif type(dict[key]) == "str":
+                for color in self._color_set.keys():
+                    dict[key] = dict[key].replace(self._color_set[color], "")
+        return dict
+
+    def __set_summary_log(self):
+        """
+        make output summary
+        :return: None
+        """
+        self._output["output_summary_log"] = "\n =======================\n"
+        self._output["output_summary_log"] += "| RESOURCE NUM\t: " + str(self._output["count"]["resource"]) + "\t|\n"
+        self._output["output_summary_log"] += "| PASS NUM\t: " + str(self._output["count"]["pass"]) + "\t|\n"
+        self._output["output_summary_log"] += "| WARN NUM\t: " + str(self._output["count"]["warn"]) + "\t|\n"
+        self._output["output_summary_log"] += "| ALERT NUM\t: " + str(self._output["count"]["alert"]) + "\t|\n"
+        self._output["output_summary_log"] += " =======================\n"
