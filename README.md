@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
 ## Review_book yaml rule
 
-||key  ||description  ||
+|key  |description  |
 |---|---|
 |title  |test title|
 |desc  |description for test|
