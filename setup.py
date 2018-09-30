@@ -8,12 +8,13 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 requires = [
     "pyhcl>=0.3.00",
+    "PyYAML>=3.00"
 ]
 
 
 setup(
     name='tf_cop',
-    version='0.0.2',
+    version='0.0.5',
     description='auto terraform review',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -25,6 +26,7 @@ setup(
     packages=[
         "tf_cop",
     ],
+    package_data={'tf_cop': ['_default_review_book/*.yaml']},
     install_requires=requires,
     classifiers=[
         'Development Status :: 1 - Planning',

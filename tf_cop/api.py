@@ -33,7 +33,7 @@ class TfCop:
                 tf_dict = tf_dict["resource"]
                 for resource_name in tf_dict.keys():
                     if self._use_default:
-                        review_book_default_path = '_default_review_book/' + resource_name.split("_")[1] + '.yaml'
+                        review_book_default_path = 'tf_cop/_default_review_book/' + resource_name.split("_")[1] + '.yaml'
                         self.__review(review_book_default_path, tf_dict, resource_name)
                     review_book_path = review_book_root_path + '/' + resource_name.split("_")[1] + '.yaml'
                     self.__review(review_book_path, tf_dict, resource_name)
