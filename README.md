@@ -27,9 +27,11 @@ if __name__ == '__main__':
 #### get output
 
 ```python
-    ptint(test.result())
-    ptint(test.result_summary())
-    ptint(test.program_error_log())
+    output = test.output(color_flg=True)
+    print(output["output_log"])
+    print(output["output_summary_log"])
+    print(output["program_error_log"])
+    print(output["system_log"])
 ```
 
 ## Review_book yaml rule
