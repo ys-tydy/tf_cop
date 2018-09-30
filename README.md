@@ -55,7 +55,7 @@ check if target value is correct.<br>
 
 ### nested test
 test to nested key_value
-```json
+```hcl
 tags {
     Name = "${terraform.env}-tf-review-bucket"
     Env = "dev"
