@@ -16,6 +16,12 @@ class TfCop:
         self._use_default = use_default
 
     def tf_review(self, tf_root_path: str, review_book_root_path: str):
+        """
+        parse tf files and pass to review function
+        :param tf_root_path: (str)
+        :param review_book_root_path: (str)
+        :return: flg: (bool)
+        """
         file_path_list = self.__get_regex_path(tf_root_path + "/**", '.*.tf\Z')
         flg = True
         try:
@@ -45,7 +51,17 @@ class TfCop:
     def program_error_log(self, color: bool = False):
         return self._logger.program_error_log(color)
 
+    def system_log(self, color: bool = False):
+        return self._logger.system_log(color)
+
     def __review(self, review_book_path: str, tf_dict: dict, resource_name: str):
+        """
+        review tf files using review_book
+        :param review_book_path: (str)
+        :param tf_dict: (dict)
+        :param resource_name: (str)
+        :return: flg, comment
+        """
         if not os.path.exists(review_book_path):
             res = "review book does not exist : " + review_book_path
             self._logger.add_system_log(res)
@@ -63,6 +79,12 @@ class TfCop:
         return True, "test pass"
 
     def __get_regex_path(self, path: str, regex: str) -> list:
+        """
+        get file path matching regex
+        :param path: (str)
+        :param regex: (str)
+        :return: file_path_list: (dict)
+        """
         all_file_path_list = glob.glob(path, recursive=True)
         file_path_list = []
         for file_path in all_file_path_list:

@@ -6,6 +6,12 @@ class Checker:
         self._logger = logger
 
     def key_value_check(self, resource_dict, review_dict):
+        """
+        check if resource_dict key_value is correct using review_dict
+        :param resource_dict: (dict)
+        :param review_dict: (dict)
+        :return: flg, message
+        """
         if "value" not in review_dict:
             review_dict["value"] = ".*"
         if review_dict["key"] not in resource_dict:
@@ -26,6 +32,12 @@ class Checker:
         return True, ""
 
     def review_cycle(self, resource_dict, review_dict):
+        """
+        make recursion review cycle
+        :param resource_dict: (dict)
+        :param review_dict: (dict)
+        :return: flg, message
+        """
         flg, res = self.key_value_check(resource_dict, review_dict)
         if not flg:
             return False, res

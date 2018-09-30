@@ -11,5 +11,9 @@ if __name__ == '__main__':
     with open("./test/ignore_test_program_error_log.log", mode='w') as f:
         test_program_error_log = test.program_error_log()
         f.write(test_program_error_log)
+    with open("./test/ignore_test_system_log.log", mode='w') as f:
+        test_system_log = test.system_log()
+        f.write(test_system_log)
     print(test_summary)
     print(test_program_error_log)
+    print(test_system_log)
