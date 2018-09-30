@@ -31,6 +31,7 @@ class TfCopLogger:
             "system_log": "",
             "count": {
                 "resource": 0,
+                "skip": 0,
                 "pass": 0,
                 "warn": 0,
                 "alert": 0
@@ -45,6 +46,8 @@ class TfCopLogger:
         :param message: (str)
         :return: None
         """
+        self._output["count"]["resource"] += 1
+        self._output["count"]["skip"] += 1
         self._output["output_log"] += self.__set_color("[SKIP] " + message + "\n", "YELLOW")
 
     def passed(self, resource_dict: dict, review_dict: dict, text: str):
@@ -166,6 +169,7 @@ class TfCopLogger:
         """
         self._output["output_summary_log"] = "\n =======================\n"
         self._output["output_summary_log"] += "| RESOURCE NUM\t: " + str(self._output["count"]["resource"]) + "\t|\n"
+        self._output["output_summary_log"] += "| SKIP NUM\t: " + str(self._output["count"]["skip"]) + "\t|\n"
         self._output["output_summary_log"] += "| PASS NUM\t: " + str(self._output["count"]["pass"]) + "\t|\n"
         self._output["output_summary_log"] += "| WARN NUM\t: " + str(self._output["count"]["warn"]) + "\t|\n"
         self._output["output_summary_log"] += "| ALERT NUM\t: " + str(self._output["count"]["alert"]) + "\t|\n"

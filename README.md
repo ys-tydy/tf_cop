@@ -65,5 +65,60 @@ tags {
 ## Testing
 `python test.py`
 
+## Sample
+test terraform files using docker.
+
+```
+├── Dockerfile
+├── main.py
+└── requirements.txt
+```
+
+```dockerfile
+FROM python:3.6
+
+RUN apt-get update
+ENV LANG ja_JP.UTF-8
+ENV LANGUAGE ja_JP:ja
+ENV LC_ALL ja_JP.UTF-8
+ENV TZ JST-9
+
+RUN pip install --upgrade pip
+RUN pip install --upgrade setuptools
+
+WORKDIR /tmp
+
+COPY requirements.txt ./
+RUN pip install -r requirements.txt
+
+COPY . .
+
+CMD ["python","main.py"]
+```
+
+
+```python
+import tf_cop
+
+if __name__ == '__main__':
+    test = tf_cop.TfCop()
+    test.tf_review("./terraform", "./review_book")
+
+    output = test.output(color_flg=True)
+    print(output["output_log"])
+    print(output["output_summary_log"])
+    print(output["program_error_log"])
+```
+
+set `TF_ROOT_PATH` & `REVIEW_BOOK_PATH`
+
+```bash
+docker build -t tf_cop .
+docker run \
+      -v `pwd`/${TF_ROOT_PATH}:/tmp/terraform -v \
+      `pwd`/${REVIEW_BOOK_PATH}:/tmp/review_book \
+      tf_cop
+```
+
 ## Author
 ys-tydy
