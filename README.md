@@ -36,14 +36,15 @@ if __name__ == '__main__':
 
 ## Review_book yaml rule
 
-|key  |description  |
-|---|---|
-|title  |test title|
-|desc  |description for test|
-|mode|test mode (existance\|value\|nested)|
-|key|test target key (ex. tags)|
-|value|correct value regex|
-|nest|for nested test|
+|key  |description  |required|
+|---|---|---|
+|title  |test title|required|
+|desc  |description for test|option|
+|mode|test mode (existance\|value\|nested)|required|
+|key|test target key (ex. tags)|required|
+|value|correct value regex|option|
+|nest|for nested test|option|
+|warn|for warn message|option (default False)|
 
 ### existance test
 check if target key is exist.<br>
@@ -65,7 +66,7 @@ tags {
 ## Testing
 `python test.py`
 
-## Sample
+## Sample usage
 test terraform files using docker.
 
 ```
