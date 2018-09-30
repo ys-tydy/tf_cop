@@ -34,7 +34,34 @@ if __name__ == '__main__':
 
 ## Review_book yaml rule
 
+||key  ||description  ||
+|---|---|
+|title  |test title|
+|desc  |description for test|
+|mode|test mode (existance|value|nested)|
+|key|test target key (ex. tags)|
+|value|correct value regex|
+|nest|for nested test|
+
+### existance test
+check if target key is exist.
+(ex. description)
+
+### value test
+check if target value is correct.
+(ex. name = "(prd|stg|dev)-s3-.*-terraform")
+
+### nested test
+test to nested key_value
+```
+tags {
+    Name = "${terraform.env}-tf-review-bucket"
+    Env = "dev"
+    }
+```
+
 ## Testing
+`python test.py`
 
 ## Author
 ys-tydy

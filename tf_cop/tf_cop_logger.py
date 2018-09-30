@@ -147,7 +147,7 @@ class TfCopLogger:
 
     def __remove_color(self, dict: dict):
         """
-        remove color srt
+        remove color str
         :param dict: (dict)
         :return: dict: (dict)
         """
