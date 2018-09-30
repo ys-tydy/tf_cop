@@ -40,7 +40,7 @@ if __name__ == '__main__':
 |---|---|
 |title  |test title|
 |desc  |description for test|
-|mode|test mode (existance|value|nested)|
+|mode|test mode (existance\|value\|nested)|
 |key|test target key (ex. tags)|
 |value|correct value regex|
 |nest|for nested test|
@@ -59,7 +59,7 @@ test to nested key_value
 tags {
     Name = "${terraform.env}-tf-review-bucket"
     Env = "dev"
-    }
+}
 ```
 
 ## Testing
