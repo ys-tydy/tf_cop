@@ -1,4 +1,5 @@
 from .api import TfCop
+from .cli import cli
 
 try:
     from .version import __version__

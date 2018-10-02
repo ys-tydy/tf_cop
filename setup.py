@@ -26,6 +26,11 @@ setup(
     packages=[
         "tf_cop",
     ],
+    entry_points={
+        "console_scripts": [
+            "tfcop=tf_cop.cli:cli"
+        ]
+    },
     package_data={'tf_cop': ['_default_review_book/*.yaml']},
     install_requires=requires,
     classifiers=[
@@ -37,3 +42,4 @@ setup(
 # python setup.py sdist
 # twine check dist/*
 # twine upload dist/*
+# pip install -Iv ./dist/tf_cop-0.0.9.tar.gz

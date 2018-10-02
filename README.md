@@ -7,12 +7,57 @@ This package helps you to review your tf script.<br>
 
 ## Installation
 
-```bash
+```shell
 $ pip install tf_cop
 ```
 
 
 ## Usage
+### 1. cli use
+at your console
+
+```shell
+$ tfcop TERRAFORM_ROOT_PATH REVIEW_BOOK_ROOT_PATH(optional)
+```
+
+sample output
+
+```shell
+☁  tf_cop [master] ⚡ tfcop test
+
+==========================================================
+RESOURCE AWS_S3_BUCKET.TEST_TF_REVIEW_BUCKET
+==========================================================
+[WARN] desc_checker : description not use
+{   'acl': 'private',
+    'bucket': '${terraform.env}-tf-review-bucket'}
+[ALERT] tag_checker : tags not use
+{   'acl': 'private',
+    'bucket': '${terraform.env}-tf-review-bucket'}
+
+==========================================================
+RESOURCE AWS_S3_BUCKET.TEST_TF_REVIEW_BUCKET2
+==========================================================
+[WARN] desc_checker : description not use
+{   'acl': 'private',
+    'bucket': '${terraform.env}-tf-review-bucket2',
+    'lifecycle_rule': {...},
+    'logging': {...},
+    'tags': {...}}
+[PASS] tag_checker : passed
+[PASS] name_checker : passed
+[PASS] env_checker : passed
+
+
+ =======================
+| RESOURCE NUM  : 2     |
+| SKIP NUM      : 0     |
+| PASS NUM      : 3     |
+| WARN NUM      : 2     |
+| ALERT NUM     : 1     |
+ =======================
+```
+### 2. module use
 #### do review
 pass `terraform root path` & `review_book root path`
 
