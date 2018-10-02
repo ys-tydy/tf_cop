@@ -14,7 +14,7 @@ requires = [
 
 setup(
     name='tf_cop',
-    version='0.0.9',
+    version='0.1.0',
     description='auto terraform review',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -34,7 +34,7 @@ setup(
     package_data={'tf_cop': ['_default_review_book/*.yaml']},
     install_requires=requires,
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 3 - Alpha',
         'Programming Language :: Python :: 3.6',
     ],
 )
