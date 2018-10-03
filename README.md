@@ -6,7 +6,7 @@ This package helps you to review your tf script.<br>
 
 # TOC
 
-- [Installation](#Installation)
+- [Installation](##Installation)
 - [Usage](#Usage)
 - [Review_book yaml rule](#Review_book)
 
