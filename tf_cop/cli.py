@@ -30,4 +30,3 @@ def cli():
         error_type = type(e).__name__
         sys.stderr.write("{0}: {1}\n".format(error_type, e.message))
         sys.exit(1)
-
