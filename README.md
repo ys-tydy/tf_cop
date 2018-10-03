@@ -5,12 +5,13 @@ This package helps you to review your tf script.<br>
 (ex: confirm add logging rule to all s3 bucket)
 
 # TOC
+<!-- TOC -->
 
-- [Installation](##Installation)
+- [Installation](#Installation)
 - [Usage](#Usage)
 - [Review_book yaml rule](#Review_book)
 
-
+<!-- /TOC -->
 ## Installation
 
 ```shell
