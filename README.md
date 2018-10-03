@@ -4,23 +4,15 @@ terraform scripts checker.<br>
 This package helps you to review your tf script.<br>
 (ex: confirm add logging rule to all s3 bucket)
 
-# TOC
-<!-- TOC -->
-
-- [Installation](#Installation)
-- [Usage](#Usage)
-- [Review_book yaml rule](#Review_book)
-
-<!-- /TOC -->
-## Installation
+## 1 Installation
 
 ```shell
 $ pip install tf_cop
 ```
 
 
-## Usage
-### 1. cli use
+## 2 Usage
+### 2.1 cli use
 at your console
 
 ```shell
@@ -64,8 +56,8 @@ RESOURCE AWS_S3_BUCKET.TEST_TF_REVIEW_BUCKET2
 | ALERT NUM     : 1     |
  =======================
 ```
-### 2. module use
-#### do review
+### 2.2 module use
+#### 2.2.1 do review
 pass `terraform root path` & `review_book root path`
 
 ```python
@@ -76,7 +68,7 @@ if __name__ == '__main__':
     test.tf_review("./test", "./review_book_default")
 ```
 
-#### get output
+#### 2.2.2 get output
 
 ```python
     output = test.output(color_flg=True)
@@ -86,7 +78,16 @@ if __name__ == '__main__':
     print(output["system_log"])
 ```
 
-## Review_book yaml rule
+## 3 Review_book yaml rule
+
+### 3.1 file name rule
+
+```python
+review_book_yaml = resource_name.split("_")[1] + '.yaml'
+```
+(ex. aws_s3_bucket => s3.yaml)
+
+### 3.2 key rule
 
 |key  |description  |required|
 |---|---|---|
@@ -98,15 +99,15 @@ if __name__ == '__main__':
 |nest|for nested test|option|
 |warn|for warn message|option (default False)|
 
-### existance test
+#### 3.2.1 existance test
 check if target key is exist.<br>
 (ex. description)
 
-### value test
+#### 3.2.2 value test
 check if target value is correct.<br>
 (ex. name = "(prd|stg|dev)-s3-.*-terraform")
 
-### nested test
+#### 3.2.3 nested test
 test to nested key_value
 ```hcl
 tags {
@@ -115,10 +116,60 @@ tags {
 }
 ```
 
-## Testing
+### 3.3 sample
+```yaml
+aws_s3_bucket:
+-
+  title: description_checker
+  description: simple existance checker
+  mode: existance
+  warn: True
+  key: description
+-
+  title: private_checker
+  description: simple value checker
+  mode: value
+  key: acl
+  value: private
+-
+  title: bucket_checker
+  description: simple value regex checker
+  mode: value
+  key: bucket
+  value: .*-tf-review-bucket.*
+-
+  title: tag_checker
+  description: nested value checker
+  mode: nested
+  key: tags
+  nest:
+    -
+      title: name_checker
+      description: nested value checker
+      mode: value
+      key: Name
+      value: .*-tf-review-bucket.*
+    -
+      title: env_checker
+      description: nested value checker
+      mode: value
+      warn: True
+      key: Env
+      value: (dev|stg|prd)
+-
+  title: if_checker
+  mode: if
+  key: logging
+  nest:
+    title: name_checker
+    mode: existance
+    key: lifecycle_rule
+```
+
+## 4 Testing
 `python test.py`
 
-## Sample usage
+## 5 Sample usage
 test terraform files using docker.
 
 ```
@@ -173,5 +224,5 @@ docker run \
       tf_cop
 ```
 
-## Author
+## 6 Author
 ys-tydy
