@@ -92,8 +92,8 @@ class TfCop:
                 review_book_default_path = default_rbook_root_path + "/" + resource_type + "/" + \
                                            tf_obj_name.split("_")[1] + '.yaml'
                 self.__review(review_book_default_path, tf_dict, tf_obj_name, resource_type)
-            review_book_path = self._rbook_root_path + '/' + tf_obj_name.split("_")[1] + "/" + \
-                               resource_type + "/" + '.yaml'
+            review_book_path = self._rbook_root_path + '/' + resource_type + "/" + \
+                               tf_obj_name.split("_")[1] + '.yaml'
             self.__review(review_book_path, tf_dict, tf_obj_name, resource_type)
         return True
 
