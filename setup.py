@@ -14,7 +14,7 @@ requires = [
 
 setup(
     name='tf_cop',
-    version='0.1.1',
+    version='0.2.0',
     description='auto terraform review',
     long_description=long_description,
     long_description_content_type='text/markdown',

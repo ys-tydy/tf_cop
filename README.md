@@ -47,7 +47,6 @@ DATA AWS_S3_BUCKET.TEST_DATA_TF_REVIEW_BUCKET
 
  =======================
 | RESOURCE NUM  : 3     |
-| SKIP NUM      : 0     |
 | warn NUM      : 2     |
 | alert NUM     : 1     |
 | pass NUM      : 4     |
@@ -69,10 +68,7 @@ if __name__ == '__main__':
 
 ```python
     output = test.output(color_flg=True)
-    print(output["output_log"])
-    print(output["output_summary_log"])
-    print(output["program_error_log"])
-    print(output["system_log"])
+    print(output)
 ```
 
 ## 3 Review_book yaml rule
@@ -218,9 +214,7 @@ if __name__ == '__main__':
     test.tf_review("./terraform", "./review_book")
 
     output = test.output(color_flg=True)
-    print(output["output_log"])
-    print(output["output_summary_log"])
-    print(output["program_error_log"])
+    print(output)
 ```
 
 set `TF_ROOT_PATH` & `REVIEW_BOOK_PATH`
