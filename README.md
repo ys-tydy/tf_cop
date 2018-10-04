@@ -23,37 +23,34 @@ sample output
 
 ```shell
 ☁  tf_cop [master] ⚡ tfcop test
+[INFO] tf_root_path     : test
+[INFO] rbook_root_path  :
 
 ==========================================================
 RESOURCE AWS_S3_BUCKET.TEST_TF_REVIEW_BUCKET
 ==========================================================
-[WARN] desc_checker : description not use
-{   'acl': 'private',
-    'bucket': '${terraform.env}-tf-review-bucket'}
-[ALERT] tag_checker : tags not use
-{   'acl': 'private',
-    'bucket': '${terraform.env}-tf-review-bucket'}
+[WARN]  desc_checker    : description not use
+[ALERT] tag_checker     : tags not use
 
 ==========================================================
 RESOURCE AWS_S3_BUCKET.TEST_TF_REVIEW_BUCKET2
 ==========================================================
-[WARN] desc_checker : description not use
-{   'acl': 'private',
-    'bucket': '${terraform.env}-tf-review-bucket2',
-    'lifecycle_rule': {...},
-    'logging': {...},
-    'tags': {...}}
-[PASS] tag_checker : passed
-[PASS] name_checker : passed
-[PASS] env_checker : passed
+[WARN]  desc_checker    : description not use
+[PASS]  tag_checker     : passed
+[PASS]  name_checker    : passed
+[PASS]  env_checker     : passed
 
+==========================================================
+DATA AWS_S3_BUCKET.TEST_DATA_TF_REVIEW_BUCKET
+==========================================================
+[PASS]  bucket_checker  : passed
 
  =======================
-| RESOURCE NUM  : 2     |
+| RESOURCE NUM  : 3     |
 | SKIP NUM      : 0     |
-| PASS NUM      : 3     |
-| WARN NUM      : 2     |
-| ALERT NUM     : 1     |
+| warn NUM      : 2     |
+| alert NUM     : 1     |
+| pass NUM      : 4     |
  =======================
 ```
 ### 2.2 module use
@@ -87,6 +84,18 @@ review_book_yaml = resource_name.split("_")[1] + '.yaml'
 ```
 (ex. aws_s3_bucket => s3.yaml)
 
+folder structure
+```
+${REVIEW_BOOK_ROOT_PATH}
+├── data
+│   ├──s3.yaml
+│   └──...
+└── resource
+    ├── acm.yaml
+    ├── api.yaml
+    └── ...
+```
+
 ### 3.2 key rule
 
 |key  |description  |required|
@@ -97,7 +106,7 @@ review_book_yaml = resource_name.split("_")[1] + '.yaml'
 |key|test target key (ex. tags)|required|
 |value|correct value regex|option|
 |nest|for nested test|option|
-|warn|for warn message|option (default False)|
+|type|test type (ex. alert, warn)|required|
 
 #### 3.2.1 existance test
 check if target key is exist.<br>

@@ -14,7 +14,7 @@ requires = [
 
 setup(
     name='tf_cop',
-    version='0.1.0',
+    version='0.1.1',
     description='auto terraform review',
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -31,7 +31,7 @@ setup(
             "tfcop=tf_cop.cli:cli"
         ]
     },
-    package_data={'tf_cop': ['_default_review_book/*.yaml']},
+    package_data={'tf_cop': ['_default_review_book/*/*.yaml']},
     install_requires=requires,
     classifiers=[
         'Development Status :: 3 - Alpha',

@@ -6,9 +6,9 @@ import sys
 parser = argparse.ArgumentParser(
     prog='tf_cop.py',
     usage='auto terraform review',
-    description='https://pypi.org/project/tf-cop/',  # 引数のヘルプの前に表示
-    epilog='end',  # 引数のヘルプの後で表示
-    add_help=True,  # -h/–help オプションの追加
+    description='https://pypi.org/project/tf-cop/',
+    epilog='end',
+    add_help=True,
 )
 
 parser.add_argument('tf_root_path', help='terraform root path (ex. ./terraform)', type=str)
@@ -17,16 +17,22 @@ parser.add_argument('-r', '--review_book_root_path', help='review_book root path
 
 
 def cli():
-    tf_cop = TfCop()
     args = parser.parse_args()
     tf_root_path = args.tf_root_path
     review_book_root_path = args.review_book_root_path
+    tf_cop = TfCop(tf_root_path, review_book_root_path)
     try:
-        tf_cop.tf_review(tf_root_path, review_book_root_path)
+        print_info("tf_root_path\t: " + tf_root_path)
+        print_info("rbook_root_path\t: " + review_book_root_path)
+        tf_cop.tf_review()
         output = tf_cop.output(color_flg=True)
-        print(output["output_log"])
-        print(output["output_summary_log"])
+        print(output)
     except Exception as e:
         error_type = type(e).__name__
         sys.stderr.write("{0}: {1}\n".format(error_type, e.message))
         sys.exit(1)
+
+
+def print_info(_text):
+    _text = "[INFO] " + _text
+    print(_text)

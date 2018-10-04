@@ -11,24 +11,27 @@ aws_api_gateway_stage:
   title: desc_checker
   desc: simple existance checker
   mode: existance
+  type: alert
   warn: True
   key: description
 -
   title: tag_checker
   desc: nested value checker
   mode: nested
+  type: alert
   key: tags
   nest:
     -
       title: name_checker
       desc: nested value checker
       mode: existance
+      type: alert
       key: Name
     -
       title: env_checker
       desc: nested value checker
       mode: value
-      warn: True
+      type: warn
       key: Env
       value: (dev|stg|prd)
 
@@ -37,5 +40,5 @@ aws_api_gateway_usage_plan:
   title: desc_checker
   desc: simple existance checker
   mode: existance
-  warn: True
+  type: warn
   key: description

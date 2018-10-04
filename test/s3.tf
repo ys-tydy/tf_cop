@@ -24,3 +24,7 @@ resource "aws_s3_bucket" "test_tf_review_bucket2" {
     Env = "dev"
   }
 }
+
+data "aws_s3_bucket" "test_data_tf_review_bucket" {
+  bucket = "${terraform.env}-data-tf-review-bucket"
+}
